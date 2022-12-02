@@ -16,5 +16,10 @@
   "bugs": {
     "url": "https://github.com/JulioCesarDelAngel/CMS-M12-D01/issues"
   },
-  "homepage": "https://github.com/JulioCesarDelAngel/CMS-M12-D01#readme"
+  "homepage": "https://github.com/JulioCesarDelAngel/CMS-M12-D01#readme",
+  "dependencies": {
+    "console.table": "^0.10.0",
+    "inquirer": "^8.0.0",
+    "mysql2": "^2.3.3"
+  }
 }
