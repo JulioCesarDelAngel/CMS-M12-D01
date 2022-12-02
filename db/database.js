@@ -38,6 +38,20 @@ var dbConfig = {
     config = config || {};
 }
 
+DB.prototype.getDepartment = async function (departmentId){
+    var query = `SELECT id, name 
+                    FROM department `
+
+    if ( departmentId !== null && departmentId > 0 ){
+        var where = ` where id= ${departmentId}`;
+        query  += where;
+    }
+    
+    const result =  await executeQuery(query,null)
+    console.log('get departamentos ejecucion');
+
+    return result ;    
+}
 
 DB.prototype.getEmployee =  async function(employeeId){
     var query = `SELECT emp.id, emp.first_name, emp.last_name,
@@ -47,7 +61,7 @@ DB.prototype.getEmployee =  async function(employeeId){
         inner join role rol on rol.id = emp.role_id
         left join employee man on man.id = emp.manager_id `
 
-    if ( employeeId ==! null && employeeId > 0 ){
+    if ( employeeId !== null && employeeId > 0 ){
         var where = ` where id= ${employeeId}`;
         query  += where;
     }

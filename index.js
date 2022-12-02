@@ -8,7 +8,7 @@ const Database = require('./db/database');
 var db = new Database();
 
 var employees = [];
-
+var departments = [];
 
 const menu = [
     {
@@ -47,7 +47,8 @@ function menuPrincipal() {
                 menuPrincipal();                
                 break;
             case "Ver todos los departamentos":
-                console.log('Opcion -Ver todos los departamentos- no implementada');
+                departments = await db.getDepartment(0);
+                console.table(departments);
                 menuPrincipal();                
                 break;
             case "Agregar departamento":
