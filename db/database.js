@@ -40,7 +40,12 @@ var dbConfig = {
 
 
 DB.prototype.getEmployee =  async function(employeeId){
-    var query = `SELECT * FROM employee `
+    var query = `SELECT emp.id, emp.first_name, emp.last_name,
+                    rol.title, rol.salary,
+                    CONCAT(man.first_name, " ", man.last_name) as manager
+    FROM employee emp
+        inner join role rol on rol.id = emp.role_id
+        left join employee man on man.id = emp.manager_id `
 
     if ( employeeId ==! null && employeeId > 0 ){
         var where = ` where id= ${employeeId}`;
