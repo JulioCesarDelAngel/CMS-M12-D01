@@ -9,6 +9,7 @@ var db = new Database();
 
 var employees = [];
 var departments = [];
+var roles=[]
 
 const menu = [
     {
@@ -39,9 +40,10 @@ function menuPrincipal() {
                 menuPrincipal();                
                 break;
             case "Ver todos los roles" :
-                console.log('Opcion -Ver todos los roles- no implementada');
+                roles = await db.getRole(0);
+                console.table(roles);
                 menuPrincipal();                
-                break;
+                break;                
             case "Agregar rol" :
                 console.log('Opcion -Agregar rol- no implementada');
                 menuPrincipal();                

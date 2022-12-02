@@ -38,6 +38,23 @@ var dbConfig = {
     config = config || {};
 }
 
+DB.prototype.getRole = async function (rolId){
+    var query = ` select rol.id, rol.title, dep.name as department, rol.salary 
+                    from role rol 
+                    inner join department dep on dep.id = rol.department_id `
+
+    if ( rolId !== null && rolId > 0 ){
+        var where = ` where rol.id = ${rolId}`;
+        query  += where;
+    }
+    
+    const result =  await executeQuery(query,null)
+    console.log('get departamentos ejecucion');
+
+    return result ;    
+}
+
+
 DB.prototype.getDepartment = async function (departmentId){
     var query = `SELECT id, name 
                     FROM department `
