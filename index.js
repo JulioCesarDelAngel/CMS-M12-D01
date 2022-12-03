@@ -5,6 +5,7 @@ const cTable = require("console.table");
 
 const Database = require('./db/database');
 
+var banner = require('./assets/js/banner');
 var db = new Database();
 
 var employees = [];
@@ -240,6 +241,7 @@ function menuPrincipal() {
 }
 
 async function init(){
+    console.log(banner);
      menuPrincipal();
 
 /*     console.log('start');
