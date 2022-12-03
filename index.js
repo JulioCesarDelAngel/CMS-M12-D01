@@ -11,7 +11,51 @@ var employees = [];
 var departments = [];
 var roles=[];
 var result=[];
+var managers=[]
 //var listaDepartamentos = [];
+
+var datosEmpleado = [
+    {
+        type:"input",
+        name:"first_name",
+        message:"¿Cual es el nombre del nuevo empleado?",
+        validate: dataInput => {
+            if (dataInput !=="")
+            {
+                return true;
+            }
+            else{
+                return 'Capture un nombre de empleado válido';
+            }
+        }          
+    },
+    {
+        type:"input",
+        name:"last_name",
+        message:"¿Cual es el apellido del nuevo empleado?",
+        validate: dataInput => {
+            if (dataInput !=="")
+            {
+                return true;
+            }
+            else{
+                return 'Capture un apellido  válido';
+            }
+        }          
+    },    
+    {
+        type:"list",
+        name:"roleSel",
+        message:"¿Cual es el rol del nuevo empleado?",
+        choices:[]
+    },
+    {
+        type:"list",
+        name:"managerSel",
+        message:"¿Quien es el gerente del nuevo empleado?",
+        choices:[]
+    }
+];
 
 var datosRol = [
     {
@@ -77,8 +121,20 @@ function menuPrincipal() {
                 menuPrincipal();                
                 break;
             case "Agregar empleado" :
-                console.log('Opcion -Agregar empleado- no implementada');
-                menuPrincipal();                
+                //Poblar listas 
+                roles = await db.getRole(0);
+                managers = await db.getManager(0);
+                datosEmpleado[2].choices = roles.map ( row => { return row.title; });
+                //deberian aparecer solo los managers no todos los empleados
+                datosEmpleado[3].choices = managers.map ( row => { return row.name; });
+
+                inquirer.prompt(datosEmpleado).then ( async (data) => {
+                    let idxRol =  roles.findIndex(element => element.title === data.roleSel );
+                    let idxMan =  managers.findIndex(element => element.name === data.managerSel );
+                    result = await db.addEmployee(data.first_name, data.last_name, roles[idxRol].id, managers[idxMan].id);                    
+                    console.log('Se a agregado: ['+data.first_name+' '+ data.last_name+'] a la base de datos.');
+                    menuPrincipal();  
+                } );              
                 break;
             case "Actualizar rol del empleado" :
                 console.log('Opcion -Actualizar rol del empleado- no implementada');

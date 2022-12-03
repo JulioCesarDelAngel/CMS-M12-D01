@@ -38,6 +38,27 @@ var dbConfig = {
     config = config || {};
 }
 
+
+
+
+DB.prototype.addEmployee = async function(firstName, lastName, roleId, managerId){
+    var query = ` insert into employee  (first_name, last_name, role_id, manager_id) values ( ? , ? , ? , ? ) ` ;
+    const result =  await executeQuery(query, [firstName, lastName, roleId, (managerId==0? null : managerId)]);
+    return result;
+}
+
+DB.prototype.getManager =  async function(){
+    var query = ` SELECT id, CONCAT(first_name, " ", last_name) as name
+                FROM employee where manager_id is null
+                union 
+                select 0, 'ninguno' 
+                order by id;  `
+
+    const result =  await executeQuery(query,null)
+    return result ;
+   }
+
+
 DB.prototype.addRol = async function(nameRol, salaryRol, depId){
     var query = ` insert into role (title, salary, department_id) values ( ? , ? , ? ) ` ;
     const result =  await executeQuery(query, [nameRol, salaryRol, depId]);
