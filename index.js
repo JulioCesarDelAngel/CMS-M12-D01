@@ -14,6 +14,15 @@ var result=[];
 var managers=[]
 //var listaDepartamentos = [];
 
+var datosPresupuesto = [
+    {
+        type: "list",
+        name: "departmentSel",
+        message: "¿De que departamento desea visualizar el presupuesto?",
+        choices: [],
+    }
+]
+
 var datosRolEmp = [
     {
         type: "list",
@@ -124,6 +133,7 @@ const menu = [
         choices: ["Ver todos los empleados", "Agregar empleado", "Actualizar rol del empleado", 
                     "Ver todos los roles", "Agregar rol",
                     "Ver todos los departamentos", "Agregar departamento", 
+                    "Ver presupuesto",
                     "Salir"], 
     }
 ];
@@ -195,6 +205,20 @@ function menuPrincipal() {
                     result = await db.addDepartment(data.name);
                     //console.log(result.affectedRows);
                     console.log('Se a agregado: ['+data.name+'] a la base de datos.');
+                    menuPrincipal();
+                });
+                break;
+            case "Ver presupuesto" :
+                //poblar lista de departamentos 
+                departments = await db.getDepartment(0);
+                datosPresupuesto[0].choices = departments.map ( row => { return row.name; });
+                datosPresupuesto[0].choices.unshift('TODOS');
+
+                inquirer.prompt(datosPresupuesto).then ( async (data) => {
+                    let idx =  departments.findIndex(element => element.name === data.departmentSel );
+                    result = await db.getPresupuesto( idx ==-1 ? 0: departments[idx].id ); 
+                    console.table(result);
+                    console.log('Consulta de presupesto completada.');
                     menuPrincipal();
                 });
                 break;

@@ -38,6 +38,27 @@ var dbConfig = {
     config = config || {};
 }
 
+DB.prototype.getPresupuesto =  async function(departmentId){
+
+    var query = ` Select dep.id, dep.name as department , sum(rol.salary) as presupuesto
+                    from department dep
+                    inner join role rol on rol.department_id = dep.id
+                    inner join employee emp on emp.role_id = rol.id ` 
+
+    if ( departmentId !== null && departmentId > 0 ){
+        var where = ` where dep.id = ${departmentId} `;
+        query  += where;
+    }                    
+    
+    query += ` 
+                group by dep.id, dep.name
+                order by dep.id;  ` ;
+
+    const result =  await executeQuery(query,null)
+    return result ;
+}
+
+
 
 DB.prototype.UpdateRoleEmployee = async function(employeId, roleId ){
     var query = ` update employee  set role_id = ${roleId} where id = ${employeId} ` ;
