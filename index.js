@@ -14,6 +14,22 @@ var result=[];
 var managers=[]
 //var listaDepartamentos = [];
 
+var datosRolEmp = [
+    {
+        type: "list",
+        name: "empleadoSel",
+        message: "¿Que empleado desea actualizar?",
+        choices: [],
+    },
+    {
+        type: "list",
+        name: "roleSel",
+        message: "¿Cual sera el nuevo rol del empleado?",
+        choices:[]
+    }
+
+]
+
 var datosEmpleado = [
     {
         type:"input",
@@ -39,7 +55,7 @@ var datosEmpleado = [
                 return true;
             }
             else{
-                return 'Capture un apellido  válido';
+                return 'Capture un apellido válido';
             }
         }          
     },    
@@ -137,8 +153,19 @@ function menuPrincipal() {
                 } );              
                 break;
             case "Actualizar rol del empleado" :
-                console.log('Opcion -Actualizar rol del empleado- no implementada');
-                menuPrincipal();                
+                //poblar lista de opciones
+                roles = await db.getRole(0);
+                employees = await db.getEmployeeList();
+                datosRolEmp[0].choices = employees.map ( row => { return row.name; });
+                datosRolEmp[1].choices = roles.map ( row => { return row.title; });
+
+                inquirer.prompt(datosRolEmp).then ( async (data) => {
+                    let idxRol =  roles.findIndex(element => element.title === data.roleSel );
+                    let idxEmp =  employees.findIndex(element => element.name === data.empleadoSel );
+                    result = await db.UpdateRoleEmployee( employees[idxEmp].id, roles[idxRol].id);
+                    console.log('Se a actualizado el rol de: ['+data.empleadoSel+'] en la base de datos.');
+                    menuPrincipal();  
+                } );              
                 break;
             case "Ver todos los roles" :
                 roles = await db.getRole(0);

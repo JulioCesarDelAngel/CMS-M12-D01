@@ -39,6 +39,12 @@ var dbConfig = {
 }
 
 
+DB.prototype.UpdateRoleEmployee = async function(employeId, roleId ){
+    var query = ` update employee  set role_id = ${roleId} where id = ${employeId} ` ;
+    console.log('query udt',query);
+    const result =  await executeQuery(query, null);
+    return result;
+}
 
 
 DB.prototype.addEmployee = async function(firstName, lastName, roleId, managerId){
@@ -116,6 +122,14 @@ DB.prototype.getEmployee =  async function(employeeId){
         query  += where;
     }
     
+    const result =  await executeQuery(query,null)
+    return result ;
+   }
+
+   DB.prototype.getEmployeeList =  async function(){
+    var query = `SELECT id, concat (first_name , " " , last_name) as name
+                    FROM employee `
+
     const result =  await executeQuery(query,null)
     return result ;
    }
