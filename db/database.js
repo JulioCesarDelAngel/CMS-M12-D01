@@ -38,6 +38,12 @@ var dbConfig = {
     config = config || {};
 }
 
+DB.prototype.addDepartment = async function(nameDep){
+    var query = ` insert into department (name) values ( ? ) ` ;
+    const result =  await executeQuery(query, [nameDep]);
+    return result;
+}
+
 DB.prototype.getRole = async function (rolId){
     var query = ` select rol.id, rol.title, dep.name as department, rol.salary 
                     from role rol 
@@ -82,7 +88,7 @@ DB.prototype.getEmployee =  async function(employeeId){
         left join employee man on man.id = emp.manager_id `
 
     if ( employeeId !== null && employeeId > 0 ){
-        var where = ` where id= ${employeeId}`;
+        var where = ` where emp.id= ${employeeId}`;
         query  += where;
     }
     

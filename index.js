@@ -9,7 +9,22 @@ var db = new Database();
 
 var employees = [];
 var departments = [];
-var roles=[]
+var roles=[];
+var result=[];
+const datosDep  =[{
+    type:"input",
+    name:"name",
+    message:"¿Cual es el nombre del departamento?",
+    validate: dataInput => {
+        if (dataInput !=="")
+        {
+            return true;
+        }
+        else{
+            return 'Capture un nombre de departamento válido';
+        }
+    }    
+}];
 
 const menu = [
     {
@@ -54,8 +69,12 @@ function menuPrincipal() {
                 menuPrincipal();                
                 break;
             case "Agregar departamento":
-                console.log('Opcion -Agregar departamento- no implementada');
-                menuPrincipal();                
+                inquirer.prompt(datosDep).then ( async (data) => {
+                    result = await db.addDepartment(data.name);
+                    //console.log(result.affectedRows);
+                    console.log('Se a agregado: ['+data.name+'] a la base de datos.');
+                    menuPrincipal();
+                });
                 break;
             case "Salir" :
                 console.log('Proceso Finaizado.');    
