@@ -38,6 +38,13 @@ var dbConfig = {
     config = config || {};
 }
 
+DB.prototype.addRol = async function(nameRol, salaryRol, depId){
+    var query = ` insert into role (title, salary, department_id) values ( ? , ? , ? ) ` ;
+    const result =  await executeQuery(query, [nameRol, salaryRol, depId]);
+    return result;
+}
+
+
 DB.prototype.addDepartment = async function(nameDep){
     var query = ` insert into department (name) values ( ? ) ` ;
     const result =  await executeQuery(query, [nameDep]);
@@ -55,8 +62,6 @@ DB.prototype.getRole = async function (rolId){
     }
     
     const result =  await executeQuery(query,null)
-    console.log('get departamentos ejecucion');
-
     return result ;    
 }
 
@@ -71,8 +76,6 @@ DB.prototype.getDepartment = async function (departmentId){
     }
     
     const result =  await executeQuery(query,null)
-    console.log('get departamentos ejecucion');
-
     return result ;    
 }
 
@@ -93,8 +96,6 @@ DB.prototype.getEmployee =  async function(employeeId){
     }
     
     const result =  await executeQuery(query,null)
-    console.log('get empleados ejecucion');
-
     return result ;
    }
 

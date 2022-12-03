@@ -11,6 +11,36 @@ var employees = [];
 var departments = [];
 var roles=[];
 var result=[];
+//var listaDepartamentos = [];
+
+var datosRol = [
+    {
+        type:"input",
+        name:"name",
+        message:"¿Cual es el nombre del nuevo rol?",
+        validate: dataInput => {
+            if (dataInput !=="")
+            {
+                return true;
+            }
+            else{
+                return 'Capture un nombre de rol válido';
+            }
+        }          
+    },
+    {
+        type: "number",
+        name: "salary",
+        message: "¿Cual es el salario del nuevo rol?",
+    },
+    {
+        type: "list",
+        name: "departmentSel",
+        message: "¿Cual es el departamento del nuevo rol?",
+        choices: [] //listaDepartamentos,
+    }  
+];
+
 const datosDep  =[{
     type:"input",
     name:"name",
@@ -60,8 +90,17 @@ function menuPrincipal() {
                 menuPrincipal();                
                 break;                
             case "Agregar rol" :
-                console.log('Opcion -Agregar rol- no implementada');
-                menuPrincipal();                
+                //llenar matriz de departamentos
+                departments = await db.getDepartment(0);
+                //listaDepartamentos = departments.map ( row => { return row.name; });
+                datosRol[2].choices = departments.map ( row => { return row.name; });;
+
+                inquirer.prompt(datosRol).then ( async (data) => {
+                    let idx =  departments.findIndex(element => element.name === data.departmentSel );
+                    result = await db.addRol(data.name, data.salary, departments[idx].id)
+                    console.log('Se a agregado: ['+data.name+'] a la base de datos.');
+                    menuPrincipal();  
+                } );              
                 break;
             case "Ver todos los departamentos":
                 departments = await db.getDepartment(0);
