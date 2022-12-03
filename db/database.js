@@ -71,11 +71,14 @@ DB.prototype.getDepartment = async function (departmentId){
 }
 
 DB.prototype.getEmployee =  async function(employeeId){
-    var query = `SELECT emp.id, emp.first_name, emp.last_name,
-                    rol.title, rol.salary,
+    var query = `SELECT emp.id, emp.first_name, emp.last_name,                    
+                    rol.title, 
+                    dep.name as department,
+                    rol.salary,                    
                     CONCAT(man.first_name, " ", man.last_name) as manager
     FROM employee emp
         inner join role rol on rol.id = emp.role_id
+        inner join department dep on dep.id = rol.department_id
         left join employee man on man.id = emp.manager_id `
 
     if ( employeeId !== null && employeeId > 0 ){
