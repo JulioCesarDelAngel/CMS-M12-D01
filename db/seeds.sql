@@ -15,17 +15,24 @@ VALUES ("Sales lead", 100000.10, 1),
         ("Lawyer", 190000.80, 4);                
 
 INSERT INTO employee (first_name, last_name, role_id)       
-VALUES ("John", "Doe", 4);                             
+VALUES ("John", "Doe", 1);                             
 
-INSERT INTO employee (first_name, last_name, role_id)       
-VALUES ("Jane", "Doe", 3);
+INSERT INTO employee (first_name, last_name, role_id, manager_id)       
+VALUES ("Mike", "Chan", 2,1);
+
+INSERT INTO employee (first_name, last_name, role_id)               
+VALUES ("Ashley", "Rodriguez", 3);
+
+INSERT INTO employee (first_name, last_name, role_id, manager_id)
+VALUES ("Kevin", "Tupik", 4, 3);
+
+INSERT INTO employee (first_name, last_name, role_id)
+VALUES ("Kunal", "Singh", 5);
 
 INSERT INTO employee (first_name, last_name, role_id, manager_id)               
-VALUES ("John", "Primero", 2, 1);
-INSERT INTO employee (first_name, last_name, role_id, manager_id)               
-VALUES ("Johns", "Segundo", 2, 1);
+VALUES ("Malia", "Brown", 6, 5);
 
+INSERT INTO employee (first_name, last_name, role_id)
+VALUES ("Sarah", "Lourd", 7);
 INSERT INTO employee (first_name, last_name, role_id, manager_id)               
-VALUES ("Jane", "Primera", 4, 2);
-INSERT INTO employee (first_name, last_name, role_id, manager_id)               
-VALUES ("Jane", "Segunda", 4, 2);
+VALUES ("Tom", "Allen", 8, 7);

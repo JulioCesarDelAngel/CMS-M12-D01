@@ -94,14 +94,22 @@ var datosRol = [
                 return true;
             }
             else{
-                return 'Capture un nombre de rol válido';
+                return 'Capture un nombre de rol válido.';
             }
         }          
     },
     {
-        type: "number",
+        type: "input",
         name: "salary",
         message: "¿Cual es el salario del nuevo rol?",
+        validate : function (salary){
+            if (isNaN(salary) || salary <= 0){
+                return  "Capture un salario válido.";
+            }
+            else {
+                return true;
+            }
+        }
     },
     {
         type: "list",
@@ -227,31 +235,12 @@ function menuPrincipal() {
                 console.log('Proceso Finaizado.');    
                 break;            
         };
-        //implementacion con if
-/*         if (answers.Opcion == "Ver todos los empleados"){
-            employees = await db.getEmployee(0);
-            console.table(employees);
-            menuPrincipal();
-           
-        } 
-        else if (answers.Option == "Salir"){
-            console.log('Proceso Finaizado.');
-        } */
     })
 }
 
 async function init(){
     console.log(banner);
-     menuPrincipal();
-
-/*     console.log('start');
-    console.log('prepare');
-    console.log('exec');
-    employees = await db.getEmployee(0);
-    console.log('result console table');
-    console.table(employees);
-    console.log('end'); */
-    
+     menuPrincipal();    
 }
 
 init();

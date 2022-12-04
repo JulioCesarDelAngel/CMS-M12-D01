@@ -61,8 +61,7 @@ DB.prototype.getPresupuesto =  async function(departmentId){
 
 
 DB.prototype.UpdateRoleEmployee = async function(employeId, roleId ){
-    var query = ` update employee  set role_id = ${roleId} where id = ${employeId} ` ;
-    console.log('query udt',query);
+    var query = ` update employee  set role_id = ${roleId} where id = ${employeId} ` ;    
     const result =  await executeQuery(query, null);
     return result;
 }
