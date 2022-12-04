@@ -27,7 +27,7 @@
 ![Visualización de la aplicación](https://github.com/JulioCesarDelAngel/CMS-M12-D01/blob/main/assets/images/CMS-M12-D01.png)
 
 
-##[Link de demostración](https://drive.google.com/file/d/1KAmWpJSXoQ0PLM4U784A6IOktzqLrKge/view?usp=sharing "Link de demostración")
+## [Link de demostración](https://drive.google.com/file/d/1KAmWpJSXoQ0PLM4U784A6IOktzqLrKge/view?usp=sharing "Link de demostración")
 
 
 ## Referencias
